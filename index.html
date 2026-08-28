@@ -10,14 +10,14 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <link rel="stylesheet" href="./style.css">
-<title>Met-Salto</title>
+<title>Met-Salto · Uruguay</title>
 </head>
 <body>
 <header>
   <div class="head">
     <div>
       <h1>Met‑Salto</h1>
-      <div class="sub">Meteorología · Salto, Uruguay</div>
+      <div class="sub">Meteorología de todo Uruguay</div>
     </div>
     <button id="refreshBtn">Actualizar</button>
   </div>
@@ -30,12 +30,18 @@
     <section class="card hero">
       <div class="heroRow">
         <div>
+          <div id="locationName" class="status">Salto</div>
           <div id="temp" class="temp">--°</div>
           <div id="cond" class="condition">Cargando...</div>
           <div id="updated" class="status"></div>
           <div id="nextUpdate" class="status"></div>
         </div>
         <div id="icon" class="wxicon">🌦️</div>
+      </div>
+
+      <div class="selectorRow">
+        <select id="citySelect"></select>
+        <input id="citySearch" placeholder="Buscar ciudad o departamento...">
       </div>
     </section>
 
@@ -60,7 +66,7 @@
       <div class="metric"><div class="label">CAPE</div><div id="cape" class="value">--</div></div>
       <div class="metric"><div class="label">CIN</div><div id="cin" class="value">--</div></div>
       <div class="metric"><div class="label">Lifted Index</div><div id="li" class="value">--</div></div>
-      <div class="metric"><div class="label">Cizalladura 0–6 km*</div><div id="shear" class="value">--</div></div>
+      <div class="metric"><div class="label">Cizalladura aprox.</div><div id="shear" class="value">--</div></div>
     </div>
     <div id="stormRead" class="status"></div>
   </section>
@@ -71,19 +77,19 @@
       <div class="uCard">
         <h3>850 hPa · ~1,5 km</h3>
         <div class="row"><span>Temperatura</span><b id="t850">--</b></div>
-        <div class="row"><span>Humedad relativa</span><b id="rh850">--</b></div>
+        <div class="row"><span>Humedad</span><b id="rh850">--</b></div>
         <div class="row"><span>Viento</span><b id="w850">--</b></div>
         <div class="row"><span>Altura geopotencial</span><b id="z850">--</b></div>
       </div>
       <div class="uCard">
         <h3>500 hPa · ~5,6 km</h3>
         <div class="row"><span>Temperatura</span><b id="t500">--</b></div>
-        <div class="row"><span>Humedad relativa</span><b id="rh500">--</b></div>
+        <div class="row"><span>Humedad</span><b id="rh500">--</b></div>
         <div class="row"><span>Viento</span><b id="w500">--</b></div>
         <div class="row"><span>Altura geopotencial</span><b id="z500">--</b></div>
       </div>
     </div>
-    <div class="status">*Aproximación práctica usando viento de 10 m y 500 hPa.</div>
+    <div class="status">*La cizalladura es una aproximación usando viento de 10 m y 500 hPa.</div>
   </section>
 
   <section class="card">
@@ -92,18 +98,13 @@
   </section>
 
   <section class="card">
-    <div class="sectionTitle">Radar de precipitación</div>
-    <div class="radarWrap">
-      <img id="radar" alt="Radar de precipitación">
-      <div id="radarTime" class="radarBadge">Cargando radar…</div>
-      <div class="cross">＋</div>
-    </div>
-    <div class="status">Radar: último barrido disponible. Fuente: RainViewer.</div>
+    <div class="sectionTitle">Pronóstico 7 días</div>
+    <div id="daily" class="daily"></div>
   </section>
 
   <section class="card">
-    <div class="sectionTitle">Pronóstico 7 días</div>
-    <div id="daily" class="daily"></div>
+    <div class="sectionTitle">Resumen nacional · capitales departamentales</div>
+    <div id="nationalGrid" class="nationalGrid"></div>
   </section>
 
   <section class="card">
@@ -112,8 +113,8 @@
   </section>
 
   <div class="footer">
-    Met‑Salto · Open‑Meteo + RainViewer · Uso informativo.<br>
-    Para avisos oficiales consultar INUMET.
+    Met‑Salto · Datos: Open‑Meteo · Actualización automática cada 10 minutos.<br>
+    Uso informativo. Para avisos oficiales consultar INUMET.
   </div>
 </main>
 
