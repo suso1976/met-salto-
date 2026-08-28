@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Met-Salto">
+<meta name="theme-color" content="#07111e">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="stylesheet" href="./style.css">
+<title>Met-Salto</title>
+</head>
+<body>
+<header>
+  <div class="head">
+    <div>
+      <h1>Met‑Salto</h1>
+      <div class="sub">Meteorología · Salto, Uruguay</div>
+    </div>
+    <button id="refreshBtn">Actualizar</button>
+  </div>
+</header>
+
+<main>
+  <div id="offlineBanner" class="offline hidden">Sin conexión · mostrando los últimos datos disponibles</div>
+
+  <div class="grid two">
+    <section class="card hero">
+      <div class="heroRow">
+        <div>
+          <div id="temp" class="temp">--°</div>
+          <div id="cond" class="condition">Cargando...</div>
+          <div id="updated" class="status"></div>
+          <div id="nextUpdate" class="status"></div>
+        </div>
+        <div id="icon" class="wxicon">🌦️</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="sectionTitle">Situación actual</div>
+      <div class="metrics">
+        <div class="metric"><div class="label">Sensación</div><div id="feel" class="value">--</div></div>
+        <div class="metric"><div class="label">Punto de rocío</div><div id="dew" class="value">--</div></div>
+        <div class="metric"><div class="label">Humedad</div><div id="hum" class="value">--</div></div>
+        <div class="metric"><div class="label">Presión MSL</div><div id="press" class="value">--</div></div>
+        <div class="metric"><div class="label">Viento</div><div id="wind" class="value">--</div></div>
+        <div class="metric"><div class="label">Ráfagas</div><div id="gust" class="value">--</div></div>
+        <div class="metric"><div class="label">Dirección</div><div id="dir" class="value">--</div></div>
+        <div class="metric"><div class="label">Nubosidad</div><div id="cloud" class="value">--</div></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="sectionTitle">Convección / tormentas</div>
+    <div class="metrics">
+      <div class="metric"><div class="label">CAPE</div><div id="cape" class="value">--</div></div>
+      <div class="metric"><div class="label">CIN</div><div id="cin" class="value">--</div></div>
+      <div class="metric"><div class="label">Lifted Index</div><div id="li" class="value">--</div></div>
+      <div class="metric"><div class="label">Cizalladura 0–6 km*</div><div id="shear" class="value">--</div></div>
+    </div>
+    <div id="stormRead" class="status"></div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Niveles altos</div>
+    <div class="upper">
+      <div class="uCard">
+        <h3>850 hPa · ~1,5 km</h3>
+        <div class="row"><span>Temperatura</span><b id="t850">--</b></div>
+        <div class="row"><span>Humedad relativa</span><b id="rh850">--</b></div>
+        <div class="row"><span>Viento</span><b id="w850">--</b></div>
+        <div class="row"><span>Altura geopotencial</span><b id="z850">--</b></div>
+      </div>
+      <div class="uCard">
+        <h3>500 hPa · ~5,6 km</h3>
+        <div class="row"><span>Temperatura</span><b id="t500">--</b></div>
+        <div class="row"><span>Humedad relativa</span><b id="rh500">--</b></div>
+        <div class="row"><span>Viento</span><b id="w500">--</b></div>
+        <div class="row"><span>Altura geopotencial</span><b id="z500">--</b></div>
+      </div>
+    </div>
+    <div class="status">*Aproximación práctica usando viento de 10 m y 500 hPa.</div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Próximas 12 horas</div>
+    <div id="hourly" class="hourly"></div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Radar de precipitación</div>
+    <div class="radarWrap">
+      <img id="radar" alt="Radar de precipitación">
+      <div id="radarTime" class="radarBadge">Cargando radar…</div>
+      <div class="cross">＋</div>
+    </div>
+    <div class="status">Radar: último barrido disponible. Fuente: RainViewer.</div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Pronóstico 7 días</div>
+    <div id="daily" class="daily"></div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Lectura meteorológica</div>
+    <div id="summary" class="alert">Esperando datos…</div>
+  </section>
+
+  <div class="footer">
+    Met‑Salto · Open‑Meteo + RainViewer · Uso informativo.<br>
+    Para avisos oficiales consultar INUMET.
+  </div>
+</main>
+
+<script src="./app.js"></script>
+</body>
+</html>
