@@ -2,20 +2,23 @@
   "name": "Met-Salto Uruguay",
   "short_name": "Met-Salto",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#07111e",
   "theme_color": "#07111e",
-  "description": "Meteorología de todo Uruguay",
+  "description": "Meteorología para Salto y todo Uruguay",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

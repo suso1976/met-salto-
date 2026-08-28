@@ -15,33 +15,49 @@
 <body>
 <header>
   <div class="head">
-    <div>
-      <h1>Met‑Salto</h1>
-      <div class="sub">Meteorología de todo Uruguay</div>
+    <div class="brand">
+      <div class="brandIcon">🌦️</div>
+      <div>
+        <h1>Met‑Salto</h1>
+        <div class="sub">Meteorología de todo Uruguay</div>
+      </div>
     </div>
-    <button id="refreshBtn">Actualizar</button>
+    <button id="refreshBtn" aria-label="Actualizar datos">↻ <span>Actualizar</span></button>
   </div>
 </header>
 
 <main>
-  <div id="offlineBanner" class="offline hidden">Sin conexión · mostrando los últimos datos disponibles</div>
+  <div id="offlineBanner" class="offline hidden">Sin conexión · mostrando los últimos datos guardados</div>
+
+  <section class="card selectorCard">
+    <div class="selectorTitle">Ubicación</div>
+    <div class="selectorRow">
+      <select id="citySelect" aria-label="Seleccionar ciudad"></select>
+      <div class="searchWrap">
+        <input id="citySearch" autocomplete="off" placeholder="Buscar ciudad o departamento…">
+        <div id="searchResults" class="searchResults hidden"></div>
+      </div>
+    </div>
+  </section>
 
   <div class="grid two">
     <section class="card hero">
       <div class="heroRow">
         <div>
-          <div id="locationName" class="status">Salto</div>
-          <div id="temp" class="temp">--°</div>
-          <div id="cond" class="condition">Cargando...</div>
+          <div id="locationName" class="locationName">Salto · Salto</div>
+          <div class="tempLine">
+            <div id="icon" class="wxicon">🌦️</div>
+            <div id="temp" class="temp">--°</div>
+          </div>
+          <div id="cond" class="condition">Cargando…</div>
           <div id="updated" class="status"></div>
           <div id="nextUpdate" class="status"></div>
         </div>
-        <div id="icon" class="wxicon">🌦️</div>
-      </div>
-
-      <div class="selectorRow">
-        <select id="citySelect"></select>
-        <input id="citySearch" placeholder="Buscar ciudad o departamento...">
+        <div class="heroRight">
+          <div class="smallLabel">Hoy</div>
+          <div id="todayRange" class="todayRange">-- / --</div>
+          <div id="todayRain" class="todayRain">☔ --</div>
+        </div>
       </div>
     </section>
 
@@ -56,20 +72,49 @@
         <div class="metric"><div class="label">Ráfagas</div><div id="gust" class="value">--</div></div>
         <div class="metric"><div class="label">Dirección</div><div id="dir" class="value">--</div></div>
         <div class="metric"><div class="label">Nubosidad</div><div id="cloud" class="value">--</div></div>
+        <div class="metric"><div class="label">Visibilidad</div><div id="visibility" class="value">--</div></div>
+        <div class="metric"><div class="label">Precipitación actual</div><div id="precipNow" class="value">--</div></div>
+        <div class="metric"><div class="label">Índice UV</div><div id="uv" class="value">--</div></div>
+        <div class="metric"><div class="label">Presión 6 h</div><div id="pressTrend" class="value">--</div></div>
       </div>
     </section>
   </div>
 
   <section class="card">
+    <div class="sectionTitle">Sol y luz diurna</div>
+    <div class="astroGrid">
+      <div class="astroItem"><span>🌅</span><div><div class="label">Salida</div><b id="sunrise">--</b></div></div>
+      <div class="astroItem"><span>🌇</span><div><div class="label">Puesta</div><b id="sunset">--</b></div></div>
+      <div class="astroItem"><span>☀️</span><div><div class="label">UV máximo</div><b id="uvMax">--</b></div></div>
+      <div class="astroItem"><span>💨</span><div><div class="label">Ráfaga máx. hoy</div><b id="gustMax">--</b></div></div>
+    </div>
+  </section>
+
+  <section class="card">
     <div class="sectionTitle">Convección / tormentas</div>
     <div class="metrics">
-      <div class="metric"><div class="label">CAPE</div><div id="cape" class="value">--</div></div>
+      <div class="metric"><div class="label">CAPE actual</div><div id="cape" class="value">--</div></div>
+      <div class="metric"><div class="label">CAPE máx. 24 h</div><div id="capeMax" class="value">--</div></div>
       <div class="metric"><div class="label">CIN</div><div id="cin" class="value">--</div></div>
       <div class="metric"><div class="label">Lifted Index</div><div id="li" class="value">--</div></div>
       <div class="metric"><div class="label">Cizalladura aprox.</div><div id="shear" class="value">--</div></div>
+      <div class="metric"><div class="label">HR 850 hPa</div><div id="rh850mini" class="value">--</div></div>
     </div>
-    <div id="stormRead" class="status"></div>
+    <div id="stormRead" class="stormBox"></div>
   </section>
+
+  <div class="grid two">
+    <section class="card">
+      <div class="sectionTitle">Presión · próximas 24 h</div>
+      <div id="pressureChart" class="chart"></div>
+      <div class="chartNote">Presión reducida al nivel del mar (hPa).</div>
+    </section>
+    <section class="card">
+      <div class="sectionTitle">Temperatura / punto de rocío · 24 h</div>
+      <div id="tempChart" class="chart"></div>
+      <div class="chartLegend"><span class="legendTemp">● Temperatura</span><span class="legendDew">● Punto de rocío</span></div>
+    </section>
+  </div>
 
   <section class="card">
     <div class="sectionTitle">Niveles altos</div>
@@ -89,7 +134,18 @@
         <div class="row"><span>Altura geopotencial</span><b id="z500">--</b></div>
       </div>
     </div>
-    <div class="status">*La cizalladura es una aproximación usando viento de 10 m y 500 hPa.</div>
+    <div class="status">*Cizalladura aproximada: diferencia vectorial entre 10 m y 500 hPa. No sustituye un sondeo 0–6 km AGL.</div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle sectionWithBadge">
+      <span>Radar de precipitación</span><span id="radarTime" class="tinyBadge">Cargando…</span>
+    </div>
+    <div class="radarWrap">
+      <img id="radar" alt="Radar de precipitación para la ubicación seleccionada">
+      <div class="cross">＋</div>
+    </div>
+    <div class="status">Último barrido disponible de RainViewer; la cobertura depende de los radares disponibles para la zona.</div>
   </section>
 
   <section class="card">
@@ -103,7 +159,12 @@
   </section>
 
   <section class="card">
-    <div class="sectionTitle">Resumen nacional · capitales departamentales</div>
+    <div class="sectionTitle">Panorama nacional</div>
+    <div id="nationalExtremes" class="nationalExtremes"></div>
+  </section>
+
+  <section class="card">
+    <div class="sectionTitle">Capitales departamentales</div>
     <div id="nationalGrid" class="nationalGrid"></div>
   </section>
 
@@ -112,8 +173,13 @@
     <div id="summary" class="alert">Esperando datos…</div>
   </section>
 
+  <div id="installHint" class="installHint hidden">
+    <b>Met‑Salto se puede instalar como app.</b><br>
+    En iPhone: Safari → Compartir → Añadir a pantalla de inicio.
+  </div>
+
   <div class="footer">
-    Met‑Salto · Datos: Open‑Meteo · Actualización automática cada 10 minutos.<br>
+    Met‑Salto · Open‑Meteo + RainViewer · Actualización automática cada 10 minutos.<br>
     Uso informativo. Para avisos oficiales consultar INUMET.
   </div>
 </main>
